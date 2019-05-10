@@ -108,7 +108,7 @@ public class UserController {
             return "注册失败，用户名已经存在";
         }
         List<Group> groupList = convertToList(userDTO.isManager(), userDTO.isTeacher(), userDTO.isStudent());
-        User user = User.createUser(userDTO.getUsername(), userDTO.getPassword(), groupList);
+        User user = User.createUser(userDTO.getUsername(), userDTO.getPasswordToken(), groupList);
         userRepository.save(user);
         return "注册成功";
     }
@@ -133,7 +133,7 @@ public class UserController {
     @ApiOperation("改")
     @ApiResponses({@ApiResponse(code = 200, message = "更新成功"),
             @ApiResponse(code = 400, message = "更新失败，不存在该用户名")})
-    private String update(@PathVariable String username, @RequestBody UserDTO userDTO, HttpServletResponse response) {
+    private String update(@PathVariable String username, @RequestBody @Validated UserDTO userDTO, HttpServletResponse response) {
         User user = userRepository.findByName(username);
         if (user == null) {
             response.setStatus(HttpStatus.BAD_REQUEST.value());
@@ -141,7 +141,7 @@ public class UserController {
         }
         List<Group> groupList = convertToList(userDTO.isManager(), userDTO.isTeacher(), userDTO.isStudent());
         user.setName(userDTO.getUsername());
-        user.setPassword(userDTO.getPassword());
+        user.setPassword(userDTO.getPasswordToken());
         user.setGroupList(groupList);
         userRepository.save(user);
         return "更新成功";
@@ -160,7 +160,7 @@ public class UserController {
         }
         UserDTO userDTO = new UserDTO();
         userDTO.setUsername(user.getName());
-        userDTO.setPassword(user.getPassword());
+        userDTO.setPasswordToken(user.getPassword());
         user.getGroupList().forEach(group -> {
             if (group.getName().equals("manager"))
                 userDTO.setManager(true);
@@ -180,7 +180,7 @@ public class UserController {
         userRepository.findAll().forEach(user -> {
             UserDTO userDTO = new UserDTO();
             userDTO.setUsername(user.getName());
-            userDTO.setPassword(user.getPassword());
+            userDTO.setPasswordToken(user.getPassword());
             user.getGroupList().forEach(group -> {
                 if (group.getName().equals("manager"))
                     userDTO.setManager(true);

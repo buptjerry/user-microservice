@@ -4,7 +4,6 @@ import bupt.usermicroservice.entity.Group;
 import bupt.usermicroservice.entity.User;
 import bupt.usermicroservice.repository.GroupRepository;
 import bupt.usermicroservice.repository.UserRepository;
-import bupt.usermicroservice.util.SHA256;
 import org.springframework.boot.CommandLineRunner;
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
@@ -18,7 +17,7 @@ public class UsermicroserviceApplication {
 
 
     @Bean
-    @Profile("reInitData")
+    @Profile("create")
     CommandLineRunner init(UserRepository userRepository, GroupRepository groupRepository) {
         String password = "123456789";
         return (args) -> {
