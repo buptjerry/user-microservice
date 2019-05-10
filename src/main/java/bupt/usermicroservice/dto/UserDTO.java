@@ -1,12 +1,15 @@
 package bupt.usermicroservice.dto;
 
-public class UserDTO {
+import javax.validation.constraints.Pattern;
 
+public class UserDTO {
+    @Pattern(regexp = "[a-zA-Z0-9]{1,16}", message = "username只能由数字和大小写字母组成")
     private String username;
-    private String password;
-    private boolean manager;
-    private boolean teacher;
-    private boolean student;
+    @Pattern(regexp = "[a-zA-Z0-9]{8,16}", message = "password只能由数字和大小写字母组成")
+    private String passwordToken;
+    private boolean manager = false;
+    private boolean teacher = false;
+    private boolean student = false;
 
 
     public String getUsername() {
@@ -17,12 +20,12 @@ public class UserDTO {
         this.username = username;
     }
 
-    public String getPassword() {
-        return password;
+    public String getPasswordToken() {
+        return passwordToken;
     }
 
-    public void setPassword(String password) {
-        this.password = password;
+    public void setPasswordToken(String passwordToken) {
+        this.passwordToken = passwordToken;
     }
 
     public boolean isManager() {
