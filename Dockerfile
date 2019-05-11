@@ -5,3 +5,4 @@ EXPOSE 8080
 ENTRYPOINT ["java", "-jar", "app.jar"]
 
 # --spring.profiles.active="create"
+# --spring.profiles.active="update"
